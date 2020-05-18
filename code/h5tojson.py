@@ -3,6 +3,7 @@ import json, h5py, sys, os
 dir = sys.argv[1]
 
 for filename in os.listdir(dir):
+	filename = dir+filename
 	# check all keys
 	with h5py.File(filename, "r") as f:
 		my_keys_list=list(f.keys())
