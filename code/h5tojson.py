@@ -1,6 +1,8 @@
 import json, sys, os
 import hdf5_getters
 
+
+
 dir = sys.argv[1]
 
 for filename in os.listdir(dir):

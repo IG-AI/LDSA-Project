@@ -1,13 +1,18 @@
+import sys, io, os
 from pymongo import MongoClient
 from gridfs import GridFS
-import io
 
 
-client = MongoClient(host='130.238.29.66',port=27018)
+dir = sys.argv[1]
+
+client = MongoClient(host='130.238.29.66', port=27018)
 db = client.test_database
 fs = GridFS(db)
 
-f = io.FileIO('data/TRAAABD128F429CF47.h5', 'r')
-fid = fs.put(f)
-print(fs.get_last_version.read())
-f.close()
+for filename in os.listdir(dir):
+    filename = dir + filename
+    f = io.FileIO(filename, 'r')
+    fid = fs.put(f)
+    f.close()
+
+print("Folowing files has been loaded in to the server: {}".format(fs.list()))
