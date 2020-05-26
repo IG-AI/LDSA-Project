@@ -41,7 +41,7 @@ class MongoDataBase:
             }
             """)
 
-        return self.db.map_reduce(mapper, reducer, "pronouns")
+        return self.collection.map_reduce(mapper, reducer, "pronouns")
 
     def delete_collection(self, collection_name="songs"):
         self.collection.drop_collection(collection_name)
