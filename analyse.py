@@ -2,7 +2,7 @@ import sys
 from bson import Code
 from pymongo import MongoClient
 from load_data import add_songs
-
+from numpy import sort
 
 class MongoDataBase:
     def __init__(self):
@@ -21,9 +21,11 @@ class MongoDataBase:
             function () {
                 var text = this.title
                 if (text) {
-                    words = text.toLowerCase().split(/[^\\p{L}0-9']+/)
-                    for(var i = words.length - 1; i >= 0; i--) { 
+                    words = text.toLowerCase().split(/[^a-z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]/)
+                    for(var i = words.length - 1; i >= 0; i--) {
+                        if (words[i] != '' && words[i].length > 1) {
                             emit(words[i], 1);
+                        }
                     }
                 }
             };
@@ -40,7 +42,7 @@ class MongoDataBase:
             }
             """)
 
-        return self.collection.map_reduce(mapper, reducer, "result")
+        return self.collection.map_reduce(mapper, reducer, "title_result")
 
     def delete_collection(self, collection_name="songs"):
         self.collection.drop_collection(collection_name)
@@ -58,5 +60,5 @@ if __name__ == '__main__':
 
     MongoDB = MongoDataBase()
     result = MongoDB.analysis_title()
-    for doc in result.find():
+    for doc in result.find().sort("value", -1).limit(10):
         print(doc)
