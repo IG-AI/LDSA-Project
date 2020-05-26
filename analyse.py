@@ -24,7 +24,6 @@ class MongoDataBase:
                     words = text.toLowerCase().split(/[^A-Za-z]/)
                     for(var i = words.length - 1; i >= 0; i--) { 
                             emit(words[i], 1);
-                        }
                     }
                 }
             };
@@ -41,7 +40,7 @@ class MongoDataBase:
             }
             """)
 
-        return self.collection.map_reduce(mapper, reducer, "pronouns")
+        return self.collection.map_reduce(mapper, reducer, "result")
 
     def delete_collection(self, collection_name="songs"):
         self.collection.drop_collection(collection_name)
