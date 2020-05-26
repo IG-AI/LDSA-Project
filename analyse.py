@@ -53,7 +53,8 @@ class MongoDataBase:
 
 
 if __name__ == '__main__':
-    dir = sys.argv[1]
+    if len(sys.argv) > 1:
+        dir = sys.argv[1]
 
     MongoDB = MongoDataBase()
     result = MongoDB.analysis_title()
