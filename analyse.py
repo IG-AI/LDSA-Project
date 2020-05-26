@@ -21,7 +21,7 @@ class MongoDataBase:
             function () {
                 var text = this.title
                 if (text) {
-                    words = text.toLowerCase().split(/[^A-Za-z]/)
+                    words = text.toLowerCase().split(/[^\\p{L}0-9']+/)
                     for(var i = words.length - 1; i >= 0; i--) { 
                             emit(words[i], 1);
                     }
