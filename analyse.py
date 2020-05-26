@@ -1,16 +1,18 @@
+import sys
 from bson import Code
 from pymongo import MongoClient
+from load_data import add_songs
 
 
 class MongoDataBase:
     def __init__(self):
         self.client = self.create_client()
-        self.twitter_db = self.client["music"]
-        self.twitter_collection = self.twitter_db["songs"]
+        self.db = self.client.music
+        self.collection = self.db.songs
 
     @staticmethod
     def create_client():
-        client = MongoClient("mongodb://130.239.29.66:27018/")
+        client = MongoClient(host='130.238.29.66', port=27018)
         return client
 
     def analysis_title(self):
@@ -39,19 +41,21 @@ class MongoDataBase:
             }
             """)
 
-        return self.twitter_collection.map_reduce(mapper, reducer, "pronouns")
+        return self.db.map_reduce(mapper, reducer, "pronouns")
 
-    def delete_collection(self, collection_name="twitter_collection"):
-        self.twitter_db.drop_collection(collection_name)
+    def delete_collection(self, collection_name="songs"):
+        self.collection.drop_collection(collection_name)
 
-    def delete_database(self, db_name="twitter_db"):
-        self.client.drop_database(db_name)
+    def add_collection(self, dir, max_songs=1000):
+        add_songs(self.collection, dir, max_songs)
 
     def __del__(self):
         self.client.close()
 
 
 if __name__ == '__main__':
+    dir = sys.argv[1]
+
     MongoDB = MongoDataBase()
     result = MongoDB.analysis_title()
     for doc in result.find():
