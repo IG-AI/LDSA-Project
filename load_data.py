@@ -1,7 +1,6 @@
 import sys, os
 import hdf5_getters
-from pymongo import MongoClient
-from analyse import MongoDataBase
+from mongodb import MongoDB
 
 count = 0
 MAX_SONGS = 1000
@@ -33,7 +32,7 @@ def add_songs(collection, directory):
 if __name__ == '__main__':
     directory = sys.argv[1]
 
-    MongoDB = MongoDataBase()
+    MongoDB = MongoDB()
 
     print('Loading data from directory: ' + directory)
     add_songs(MongoDB.collection, directory)
