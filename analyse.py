@@ -34,8 +34,8 @@ def analysis_title(collection):
     return collection.map_reduce(mapper, reducer, "title_result")
 
 
-def print_map_reduce(collection, key, amount):
-    for doc in collection.find().sort(key, -1).limit(amount):
+def print_map_reduce(collection, amount):
+    for doc in collection.find().sort("value", -1).limit(amount):
         print(doc)
 
 
@@ -51,4 +51,4 @@ if __name__ == '__main__':
     # MongoDB.print_collection(1000)
 
     result = analysis_title(MongoDB.collection)
-    print_map_reduce(result, "value", 50)
+    print_map_reduce(result, 50)
