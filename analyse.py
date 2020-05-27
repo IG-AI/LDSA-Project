@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from load_data import add_songs
 from numpy import sort
 
+
 class MongoDataBase:
     def __init__(self):
         self.client = self.create_client()
@@ -21,7 +22,7 @@ class MongoDataBase:
             function () {
                 var text = this.title
                 if (text) {
-                    words = text.toLowerCase().split(/[^a-z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]/)
+                    words = text.toLowerCase().split(/[]/)
                     for(var i = words.length - 1; i >= 0; i--) {
                         if (words[i] != '' && words[i].length > 1) {
                             emit(words[i], 1);
@@ -44,6 +45,10 @@ class MongoDataBase:
 
         return self.collection.map_reduce(mapper, reducer, "title_result")
 
+    def access_text_data(self, amount):
+        tweets_text = self.collection.find().limit(amount)
+        return tweets_text
+
     def delete_collection(self, collection_name="songs"):
         self.collection.drop_collection(collection_name)
 
@@ -53,12 +58,23 @@ class MongoDataBase:
     def __del__(self):
         self.client.close()
 
+    def print_collection(self, amount):
+        text = self.access_text_data(amount)
+        for doc in text.find().limit(amount):
+            print(doc)
+
+
+def print_map_reduce(collection, key, amount):
+    for doc in collection.find().sort(key, -1).limit(amount):
+        print(doc)
+
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         dir = sys.argv[1]
 
     MongoDB = MongoDataBase()
-    result = MongoDB.analysis_title()
-    for doc in result.find().sort("value", -1).limit(10):
-        print(doc)
+    MongoDB.print_colection(100)
+
+    # result = MongoDB.analysis_title()
+    # print_map_reduce(result, 10)
