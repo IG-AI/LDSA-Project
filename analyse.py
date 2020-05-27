@@ -22,9 +22,9 @@ class MongoDataBase:
             function () {
                 var text = this.title
                 if (text) {
-                    words = text.toLowerCase().split(/[]/)
+                    words = text.toLowerCase().split(" ")
                     for(var i = words.length - 1; i >= 0; i--) {
-                        emit(words[i], 1);
+                        emit(words[i].replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, ''), 1);
                     }
                 }
             };
@@ -72,10 +72,11 @@ if __name__ == '__main__':
         directory = sys.argv[1]
         
     MongoDB = MongoDataBase()
-    MongoDB.delete_collection()
-    MongoDB.add_collection(directory)
 
-    MongoDB.print_collection(1000)
+    # MongoDB.delete_collection()
+    # MongoDB.add_collection(directory)
 
-    # result = MongoDB.analysis_title()
-    # print_map_reduce(result, 10)
+    # MongoDB.print_collection(1000)
+
+    result = MongoDB.analysis_title()
+    print_map_reduce(result, "value", 10)
