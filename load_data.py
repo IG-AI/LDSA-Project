@@ -1,6 +1,5 @@
-import sys, os
+import os
 import hdf5_getters
-from mongodb import MongoDB
 
 count = 0
 MAX_SONGS = 1000
@@ -27,12 +26,3 @@ def add_songs(collection, directory):
                         'danceability': danceability
                     }
                     collection.insert_one(song)
-
-
-if __name__ == '__main__':
-    directory = sys.argv[1]
-
-    MongoDB = MongoDB()
-
-    print('Loading data from directory: ' + directory)
-    add_songs(MongoDB.collection, directory)
