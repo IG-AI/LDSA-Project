@@ -11,7 +11,10 @@ def analysis_title(collection):
             if (text) {
                 words = text.toLowerCase().split(" ")
                 for(var i = words.length - 1; i >= 0; i--) {
-                    emit(words[i].replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, ''), 1);
+                    word = words[i].replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '')
+                    if (word != '-' && word != '') {
+                        emit(word, 1);
+                    }
                 }
             }
         };
@@ -48,4 +51,4 @@ if __name__ == '__main__':
     # MongoDB.print_collection(1000)
 
     result = analysis_title(MongoDB.collection)
-    print_map_reduce(result, "value", 10)
+    print_map_reduce(result, "value", 50)
