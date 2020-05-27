@@ -74,7 +74,10 @@ if __name__ == '__main__':
         dir = sys.argv[1]
 
     MongoDB = MongoDataBase()
-    MongoDB.print_colection(100)
+    MongoDB.delete_collection()
+    MongoDataBase.add_collection(dir)
+
+    MongoDB.print_collection(100)
 
     # result = MongoDB.analysis_title()
     # print_map_reduce(result, 10)

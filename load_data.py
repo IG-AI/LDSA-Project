@@ -20,7 +20,7 @@ def add_songs(collection, directory, max_songs):
                     year = hdf5_getters.get_year(h5, i)
                     danceability = hdf5_getters.get_danceability(h5, i)
                     song = {
-                        'title': str(title),
+                        'title': title.decode("uti-8"),
                         'year': int(year),
                         'danceability': float(danceability)
                     }
