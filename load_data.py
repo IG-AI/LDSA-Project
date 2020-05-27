@@ -22,11 +22,13 @@ def add_songs(collection, directory):
                     danceability = hdf5_getters.get_danceability(h5, i).item()
                     tags = hdf5_getters.get_artist_mbtags(h5, i).tolist()
                     genres = [tag.decode('UTF-8') for tag in tags]
-                        
+                    tempo = hdf5_getters.get_tempo(h5, i)
+
                     song = {
                         'title': title,
                         'year': year,
                         'danceability': danceability,
-                        'genres': genres
+                        'genres': genres,
+                        'temp': tempo
                     }
                     collection.insert_one(song)
