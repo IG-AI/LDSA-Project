@@ -2,7 +2,7 @@ import os
 import hdf5_getters
 
 count = 0
-MAX_SONGS = 1
+MAX_SONGS = 1000
 def add_songs(collection, directory):
     global count
     global MAX_SONGS
@@ -20,12 +20,13 @@ def add_songs(collection, directory):
                     title = hdf5_getters.get_title(h5, i).decode('UTF-8')
                     year = hdf5_getters.get_year(h5, i).item()
                     danceability = hdf5_getters.get_danceability(h5, i).item()
-                    tag = hdf5_getters.get_artist_mbtags(h5, i)
-                    print("Tag: " + str(type(tag)))
+                    tags = hdf5_getters.get_artist_mbtags(h5, i).tolist()
+                    genres = [tag.decode('UTF-8') for tag in tags]
+                        
                     song = {
                         'title': title,
                         'year': year,
                         'danceability': danceability,
-                        'tag': tag
+                        'genres': genres
                     }
                     collection.insert_one(song)
