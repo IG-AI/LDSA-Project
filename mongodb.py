@@ -14,8 +14,8 @@ class MongoDB:
         return client
 
     def access_text_data(self, amount):
-        tweets_text = self.collection.find().limit(amount)
-        return tweets_text
+        text = self.collection.find().limit(amount)
+        return text
 
     def delete_collection(self, collection_name="songs"):
         self.db.drop_collection(collection_name)
