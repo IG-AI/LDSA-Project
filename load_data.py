@@ -1,10 +1,10 @@
 import sys, os
 import hdf5_getters
 from pymongo import MongoClient
+from analyse import MongoDataBase
 
 count = 0
 MAX_SONGS = 1000
-
 def add_songs(collection, directory):
     global count
     global MAX_SONGS
@@ -31,14 +31,9 @@ def add_songs(collection, directory):
 
 
 if __name__ == '__main__':
-    dir = sys.argv[1]
+    directory = sys.argv[1]
 
-    client = MongoClient(host='130.238.29.66', port=27018)
-    db = client.music
-    collection = db.songs
-    print('Mongo client: ', client)
-    print('Mongo db: ', db)
-    print('Mongo collection: ', collection)
+    MongoDB = MongoDataBase()
 
-    print('Loading data from directory: ' + dir)
-    add_songs(collection, dir)
+    print('Loading data from directory: ' + directory)
+    add_songs(MongoDB.collection, directory)

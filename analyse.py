@@ -53,13 +53,13 @@ class MongoDataBase:
     def add_collection(self, directory):
         add_songs(self.collection, directory)
 
-    def __del__(self):
-        self.client.close()
-
     def print_collection(self, amount):
         text = self.access_text_data(amount)
         for doc in text:
             print(doc)
+
+    def __del__(self):
+        self.client.close()
 
 
 def print_map_reduce(collection, key, amount):
