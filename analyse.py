@@ -24,9 +24,7 @@ class MongoDataBase:
                 if (text) {
                     words = text.toLowerCase().split(/[]/)
                     for(var i = words.length - 1; i >= 0; i--) {
-                        if (words[i] != '' && words[i].length > 1) {
-                            emit(words[i], 1);
-                        }
+                        emit(words[i], 1);
                     }
                 }
             };
@@ -50,17 +48,17 @@ class MongoDataBase:
         return tweets_text
 
     def delete_collection(self, collection_name="songs"):
-        self.collection.drop_collection(collection_name)
+        self.db.drop_collection(collection_name)
 
-    def add_collection(self, dir, max_songs=1000):
-        add_songs(self.collection, dir, max_songs)
+    def add_collection(self, directory):
+        add_songs(self.collection, directory)
 
     def __del__(self):
         self.client.close()
 
     def print_collection(self, amount):
         text = self.access_text_data(amount)
-        for doc in text.find().limit(amount):
+        for doc in text:
             print(doc)
 
 
@@ -71,13 +69,13 @@ def print_map_reduce(collection, key, amount):
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        dir = sys.argv[1]
-
+        directory = sys.argv[1]
+        
     MongoDB = MongoDataBase()
     MongoDB.delete_collection()
-    MongoDataBase.add_collection(dir)
+    MongoDB.add_collection(directory)
 
-    MongoDB.print_collection(100)
+    MongoDB.print_collection(1000)
 
     # result = MongoDB.analysis_title()
     # print_map_reduce(result, 10)
