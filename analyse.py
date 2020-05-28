@@ -1,4 +1,4 @@
-import sys
+import sys, time
 from bson import Code
 from mongodb import MongoDB
 
@@ -50,5 +50,8 @@ if __name__ == '__main__':
 
     # MongoDB.print_collection(1000)
 
+    start_time = time.time()
     result = analysis_title(MongoDB.collection)
-    print_map_reduce(result, 50)
+    elapsed_time = time.time() - start_time
+    print_map_reduce(result, 10)
+    print("Running time: " + elapsed_time)
