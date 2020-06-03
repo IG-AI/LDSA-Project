@@ -31,9 +31,12 @@ def parse_songs(directory):
                         'genres': genres,
                         'tempo': tempo
                     }
-                    with open("/home/ubuntu/million_songs/parsed_data/" + filename + '.json', 'w') as fp:
+                    song = os.path.splitext(filename)
+                    with open("/home/ubuntu/million_songs/parsed_data/" + song[0] + '.json', 'w') as fp:
                         json.dump(song, fp)
 
 def add_songs(collection, directory):
     for filename in os.listdir(directory):
-        collection.insert_one(filename)
+        file_path = os.path.join(directory, filename)
+        with open(file_path, 'r') as f:
+            collection.insert_one(f)
