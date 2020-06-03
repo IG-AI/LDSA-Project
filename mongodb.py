@@ -1,4 +1,4 @@
-from load_data import add_songs
+from load_data import add_songs, parse_songs
 from pymongo import MongoClient
 
 
@@ -22,6 +22,9 @@ class MongoDB:
 
     def add_collection(self, directory):
         add_songs(self.collection, directory)
+
+    def parse_data(self, directory):
+        parse_songs(directory)
 
     def print_collection(self, amount):
         text = self.access_text_data(amount)

@@ -1,16 +1,16 @@
-import os
+import os, json
 import hdf5_getters
 
 count = 0
 MAX_SONGS = 1000
-def add_songs(collection, directory):
+def parse_songs(directory):
     global count
     global MAX_SONGS
     for filename in os.listdir(directory):
         if count >= MAX_SONGS: return
         file_path = os.path.join(directory, filename)
         if os.path.isdir(file_path):
-            add_songs(collection, file_path)
+            parse_songs(file_path)
         else:
             count += 1
             if count % 100 == 0: print('Loaded ' + str(count) + ' songs')
@@ -31,4 +31,9 @@ def add_songs(collection, directory):
                         'genres': genres,
                         'tempo': tempo
                     }
-                    collection.insert_one(song)
+                    with open("/home/ubuntu/million_songs/parsed_data/" + filename + '.json', 'w') as fp:
+                        json.dump(song, fp)
+
+def add_songs(collection, directory):
+    for filename in os.listdir(directory):
+        collection.insert_one(filename)

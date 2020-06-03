@@ -45,10 +45,12 @@ if __name__ == '__main__':
         
     MongoDB = MongoDB()
 
+    MongoDB.parse_data(directory)
+
     # MongoDB.delete_collection()
     # MongoDB.add_collection(directory)
 
     # MongoDB.print_collection(1000)
 
-    result = analysis_title(MongoDB.collection)
-    print_map_reduce(result, 50)
+    # result = analysis_title(MongoDB.collection)
+    # print_map_reduce(result, 50)
