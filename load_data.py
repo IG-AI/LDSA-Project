@@ -13,7 +13,7 @@ def parse_songs(directory):
             parse_songs(file_path)
         else:
             count += 1
-            if count % 100 == 0: print('Loaded ' + str(count) + ' songs')
+            if count % 100 == 0: print('Parsed ' + str(count) + ' songs')
 
             with hdf5_getters.open_h5_file_read(file_path) as h5:
                 for i in range(hdf5_getters.get_num_songs(h5)):
@@ -36,7 +36,10 @@ def parse_songs(directory):
                         json.dump(song, fp)
 
 def add_songs(collection, directory):
+    i = 0
     for filename in os.listdir(directory):
+        i += 1
+        if i % 100 == 0: print('Loaded ' + str(i) + ' songs')
         file_path = os.path.join(directory, filename)
         with open(file_path, 'r') as f:
             collection.insert_one(f)
