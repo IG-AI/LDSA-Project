@@ -2,7 +2,7 @@ import os, json
 import hdf5_getters
 
 count = 0
-MAX_SONGS = 1000
+MAX_SONGS = 1000000
 def parse_songs(directory):
     global count
     global MAX_SONGS
