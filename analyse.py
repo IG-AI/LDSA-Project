@@ -41,19 +41,20 @@ def print_map_reduce(collection, amount):
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        directory = sys.argv[1]
+        input = sys.argv[1]
         
     MongoDB = MongoDB()
 
-    MongoDB.parse_data(directory)
+    # MongoDB.parse_data(input)
 
     # MongoDB.delete_collection()
-    # MongoDB.add_collection(directory)
+    MongoDB.add_collection(input)
 
-    # MongoDB.print_collection(1000)
+    MongoDB.print_collection(1000)
 
-    # start_time = time.time()
-    # result = analysis_title(MongoDB.collection)
-    # print_map_reduce(result, 50)
-    # elapsed_time = time.time() - start_time
-    # print("Running time: " + str(elapsed_time))
+    start_time = time.time()
+    for i in range(input):
+        result = analysis_title(MongoDB.collection)
+        print_map_reduce(result, 50)
+    elapsed_time = time.time() - start_time
+    print("Running time: " + str(elapsed_time))
