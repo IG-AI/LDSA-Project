@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
     # MongoDB.parse_data(input)
 
-    # MongoDB.delete_collection()
+    MongoDB.delete_collection()
     MongoDB.add_collection(input)
 
     MongoDB.print_collection(1000)

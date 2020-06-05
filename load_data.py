@@ -35,11 +35,17 @@ def parse_songs(directory):
                     with open("/home/ubuntu/million_songs/parsed_data/" + song[0] + '.json', 'w') as fp:
                         json.dump(song, fp)
 
-def add_songs(collection, directory):
+def add_songs(collection1, collection2, collection3, directory):
     i = 0
     for filename in os.listdir(directory):
         i += 1
         if i % 100 == 0: print('Loaded ' + str(i) + ' songs')
         file_path = os.path.join(directory, filename)
         with open(file_path, 'r') as f:
-            collection.insert_one(f)
+            collection1.insert_one(f)
+
+            for i in range(2):
+                collection2.insert_one(f)
+
+            for i in range(3):
+                collection3.insert_one(f)
