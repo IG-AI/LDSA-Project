@@ -52,9 +52,11 @@ if __name__ == '__main__':
 
     MongoDB.print_collection(1000)
 
+    """
     start_time = time.time()
     for i in range(input):
         result = analysis_title(MongoDB.collection)
         print_map_reduce(result, 50)
     elapsed_time = time.time() - start_time
     print("Running time: " + str(elapsed_time))
+    """
