@@ -46,10 +46,10 @@ def add_songs(collection1, collection2, collection3, directory):
 
             collection1.insert_one(data)
 
-            for i in range(2):
+            for j in range(2):
                 del data["_id"]
                 collection2.insert_one(data)
 
-            for i in range(3):
+            for k in range(3):
                 del data["_id"]
                 collection3.insert_one(data)
