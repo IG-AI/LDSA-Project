@@ -44,10 +44,14 @@ def add_songs(collection1, collection2, collection3, directory):
         with open(file_path, 'r') as f:
             data = json.load(f)
 
+            data["dup"] = 0
+
             collection1.insert_one(data)
 
             for i in range(2):
+                data["dup"] = i
                 collection2.insert_one(data)
 
             for i in range(3):
+                data["dup"] = i
                 collection3.insert_one(data)
