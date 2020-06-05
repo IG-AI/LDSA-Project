@@ -42,10 +42,12 @@ def add_songs(collection1, collection2, collection3, directory):
         if i % 100 == 0: print('Loaded ' + str(i) + ' songs')
         file_path = os.path.join(directory, filename)
         with open(file_path, 'r') as f:
-            collection1.insert_one(f)
+            data = json.load(f)
+
+            collection1.insert_one(data)
 
             for i in range(2):
-                collection2.insert_one(f)
+                collection2.insert_one(data)
 
             for i in range(3):
-                collection3.insert_one(f)
+                collection3.insert_one(data)
