@@ -6,9 +6,9 @@ class MongoDB:
     def __init__(self):
         self.client = self.create_client()
         self.db = self.client.music
-        self.collection1 = self.db.songs
-        self.collection2 = self.db.songs2
-        self.collection3 = self.db.songs3
+        self.songs = self.db.songs
+        self.songs2 = self.db.songs2
+        self.songs3 = self.db.songs3
 
     @staticmethod
     def create_client():
@@ -16,7 +16,7 @@ class MongoDB:
         return client
 
     def access_text_data(self, amount):
-        text = self.collection1.find().limit(amount)
+        text = self.songs.find().limit(amount)
         return text
 
     def delete_collection(self):
@@ -25,7 +25,7 @@ class MongoDB:
         self.db.drop_collection("songs3")
 
     def add_collection(self, directory):
-        add_songs(self.collection1, self.collection2, self.collection3, directory)
+        add_songs(self.songs, self.songs2, self.songs3, directory)
 
     def parse_data(self, directory):
         parse_songs(directory)
